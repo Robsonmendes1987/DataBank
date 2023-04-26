@@ -3,7 +3,7 @@ version: "3"
 services:
   frontend:
     container_name: frontend_pxbank
-    build: ./frontend/PXBANK
+    build: ./frontend
     volumes:
       - ./frontend/src:/app-frontend/src
     ports:
