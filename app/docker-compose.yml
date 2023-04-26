@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  frontend:
+    container_name: frontend_pxbank
+    build: ./frontend/PXBANK
+    volumes:
+      - ./frontend/src:/app-frontend/src
+    ports:
+      - 5173:5173
+    platform: linux/x86_64
+    networks:
+      - pxbank-networks
+    working_dir: /app-frontend
+    depends_on:
+      - backend
+
+
+  backend:
+    container_name: backend-pxbank
+    build: ./back-end
+    platform: linux/x86_64
+    working_dir: /app-backend
+    ports:
+      - 3002:3001
+    networks:
+      - pxbank-networks
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0.29
+    container_name: pxbank-db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=PXBANK
+    networks:
+      - pxbank-networks
+    ports:
+      - 3306:3306
+
+networks:
+  pxbank-networks:
+    name: pxbank-networks
