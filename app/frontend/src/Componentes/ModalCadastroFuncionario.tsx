@@ -2,15 +2,11 @@ import {
   useState,
   useContext,
   useEffect,
-  SetStateAction,
-  BaseSyntheticEvent,
 } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { api } from "../ServicesApi/funcionarioApi";
 import {
   AppContext,
-  FuncionarioProvider,
-  UserContextProps,
 } from "../Context/FuncionarioProvider";
 import IFuncioanario from "../helpers/interfaces/interface";
 import React from "react";
@@ -24,52 +20,30 @@ export function ModalCadastroFuncionario() {
   const { funcionario, setFuncionario, allFuncionarios } =
     useContext(AppContext);
   const [emailErr, setemailErr] = useState<boolean>(false);
-  const [state, setState] = useState<any>();
   const [cpfErr, setCpfErr] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState("");
 
-  const validateInput = (data: IFuncioanario) => {
-    // if (!validateDtaNascimento.test(data.data_nascimento)) {
-    //   setemailErr(true);
 
-    //   setShowModal(true);
 
-    // } else {
-    //   setemailErr(false);
-    //   setShowModal(false);
-
-    // }
-    // if(inputValue.trim() === "") {
-    //   alert("Preencha todos os campos!");
-    // // return;
-    // }
-
+  const handleSubmitPost: SubmitHandler<any> = async (data: IFuncioanario) => {
+    // validateInput(data);
     if (!validateCpf.test(data.cpf as unknown as string)) {
       setCpfErr(true);
+      alert('Formato Cpf invalido: (000.000.000.00)')
       setShowModal(true);
     } else {
       setCpfErr(false);
-      setShowModal(false); 
-    }
-  };
-
-  const handleSubmitPost: SubmitHandler<any> = async (data: IFuncioanario) => {
-    validateInput(data);
-    if (cpfErr) {
-      return;
-    } else {
-
+      setShowModal(false);
       await api.post("funcionarios", data);
-  
-      setFuncionario(funcionario.filter((del) => del._id !== data._id));
     }
-    reset();
 
+
+    setFuncionario(funcionario.filter((del) => del._id !== data._id));
+    reset();
   };
 
   useEffect(() => {
-    allFuncionarios();
-  }, []);
+    handleSubmit
+  }, [allFuncionarios]);
 
   return (
     <>
@@ -104,9 +78,9 @@ export function ModalCadastroFuncionario() {
                             placeholder="Digite o Cpf"
                             {...register("cpf")}
                           />
-                          {cpfErr && (
+                          {/* {cpfErr && (
                             <p>Formato Cpf invalido: (000.000.000.00)</p>
-                          )}
+                          )} */}
                         </div>
                         <div className="  px-2 py-3 text-left text-xs font-medium text-grady-500 uppercase track-wider">
                           <input
