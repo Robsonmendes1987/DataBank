@@ -32,16 +32,9 @@ export default class Funcionario {
   }
 
   public async deletFuncionario() {
-    try {
-      const { id } = this.req.params;
-      const { type, message } = await this.service.deleteFuncionario(id);
-      return this.res
-        .status(type)
-        .json({ message: "Funcionario excluído com sucesso!" });
-    } catch (e: any) {
-      console.log(e.message);
-      this.res.status(500).json({ message: "Algo deu errado" });
-    }
+    const {id} = this.req.params;
+    const {type, message} = await this.service.deleteFuncionario(id)
+    this.res.status(type).json(message)
   }
 
   public async updateFunciionario() {

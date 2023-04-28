@@ -25,10 +25,10 @@ class createFuncionario {
     }
     updateFuncinario(id, funcionario) {
         return __awaiter(this, void 0, void 0, function* () {
-            const x = yield funcionario_1.default.findByPk(id);
-            if (!x)
+            const upDateFuncionario = yield funcionario_1.default.findByPk(id);
+            if (!upDateFuncionario)
                 return { type: 404, message: "Algo deu errado" };
-            yield funcionario_1.default.update(Object.assign({}, funcionario), { where: { id } });
+            yield upDateFuncionario.update(Object.assign({}, funcionario), { where: { id } });
             console.log("SERVICE", Object.assign({ id }, funcionario));
             return { type: 201, message: Object.assign({ id }, funcionario) };
         });
