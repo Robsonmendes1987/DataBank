@@ -36,7 +36,7 @@ export function GetApiFuncionarios() {
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-gray-300">
               {funcionario.map((element) => (
                 <tr key={element._id}>
                   <td className="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">

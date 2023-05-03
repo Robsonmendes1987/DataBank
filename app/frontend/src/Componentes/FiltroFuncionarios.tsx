@@ -49,7 +49,7 @@ export function FiltroFuncionarios() {
 
   return (
     <>
-      <input
+      <input className=""
         value={filter}
         type="text"
         placeholder="Buscar por Nome"
@@ -63,6 +63,7 @@ export function FiltroFuncionarios() {
           name="select"
           className="w-30 md:w-60 lg:w-48"
         >
+          <option value="">Selecione uma opção</option>
           {departamento.map((element) => (
             <option value={element}>{element}</option>
           ))}

@@ -40,17 +40,9 @@ class Funcionario {
     }
     deletFuncionario() {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const { id } = this.req.params;
-                const { type, message } = yield this.service.deleteFuncionario(id);
-                return this.res
-                    .status(type)
-                    .json({ message: "Funcionario excluído com sucesso!" });
-            }
-            catch (e) {
-                console.log(e.message);
-                this.res.status(500).json({ message: "Algo deu errado" });
-            }
+            const { id } = this.req.params;
+            const { type, message } = yield this.service.deleteFuncionario(id);
+            this.res.status(type).json(message);
         });
     }
     updateFunciionario() {

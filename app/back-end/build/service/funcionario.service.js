@@ -36,13 +36,19 @@ class createFuncionario {
     getFuncionarioById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const funcionario = yield funcionario_1.default.findByPk(id);
+            if (!funcionario) {
+                return { type: 400, message: 'Funcionario nao encontrado' };
+            }
             return { type: 201, message: funcionario };
         });
     }
     deleteFuncionario(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const funcionario = yield funcionario_1.default.destroy({ where: { id } });
-            return { type: 200, message: funcionario };
+            if (!funcionario) {
+                return { type: 400, message: 'Nao foi possivel excluir, Funcionario nao encontrado' };
+            }
+            return { type: 201, message: funcionario };
         });
     }
     getAllFuncionario() {
