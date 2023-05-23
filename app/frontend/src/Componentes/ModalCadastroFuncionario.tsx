@@ -10,23 +10,18 @@ import {
 } from "../Context/FuncionarioProvider";
 import IFuncioanario from "../helpers/interfaces/interface";
 import React from "react";
-import { validateCpf, validateDtaNascimento } from "../utils/regex";
-
-interface FormValues extends IFuncioanario {}
+import { validateCpf } from "../utils/regex";
 
 export function ModalCadastroFuncionario() {
-  const [loading, setLoading] = useState(false)
   const [showModal, setShowModal] = React.useState(false);
   const { register, handleSubmit, reset } = useForm();
-  const { funcionario, setFuncionario, allFuncionarios } =
+  const {funcionario, allFuncionarios, setFuncionario } =
     useContext(AppContext);
-  const [emailErr, setemailErr] = useState<boolean>(false);
   const [cpfErr, setCpfErr] = useState<boolean>(false);
 
 
 
   const handleSubmitPost: SubmitHandler<any> = async (data: IFuncioanario) => {
-    // validateInput(data);
     if (!validateCpf.test(data.cpf as unknown as string)) {
       setCpfErr(true);
       alert('Formato Cpf invalido: (000.000.000.00)')
@@ -35,14 +30,13 @@ export function ModalCadastroFuncionario() {
       setCpfErr(false);
       setShowModal(false);
       await api.post("funcionarios", data);
-      setLoading(false)
     }
   };
 
 
   useEffect(() => {
-    handleSubmit
-  }, [allFuncionarios]);
+    
+  }, [funcionario]);
 
   return (
     <>
@@ -72,15 +66,6 @@ export function ModalCadastroFuncionario() {
                         <div className="  px-2 py-3 text-left text-xs font-medium text-grady-500 uppercase track-wider">
                           <input
                             className="px-6 py-3 text-grady-500  track-wider   text-xs font-medium text-grady-500 uppercase track-wider w-full text-center"
-                            type=""
-                            id="fname"
-                            placeholder="Digite o Cpf"
-                            {...register("cpf")}
-                          />
-                        </div>
-                        <div className="  px-2 py-3 text-left text-xs font-medium text-grady-500 uppercase track-wider">
-                          <input
-                            className="px-6 py-3 text-grady-500  track-wider   text-xs font-medium text-grady-500 uppercase track-wider w-full text-center"
                             type="text"
                             id="fname"
                             placeholder="Digite o nome"
@@ -90,10 +75,19 @@ export function ModalCadastroFuncionario() {
                         <div className="  px-2 py-3 text-left text-xs font-medium text-grady-500 uppercase track-wider">
                           <input
                             className="px-6 py-3 text-grady-500  track-wider   text-xs font-medium text-grady-500 uppercase track-wider w-full text-center"
-                            type="text"
+                            type=""
                             id="fname"
-                            placeholder="Digite o Salario"
-                            {...register("salario")}
+                            placeholder="Digite o Cpf"
+                            {...register("cpf")}
+                          />
+                        </div>
+                        <div className="  px-2 py-3 text-left text-xs font-medium text-grady-500 uppercase track-wider">
+                          <input
+                            className="px-6 py-3 text-grady-500  track-wider   text-xs font-medium text-grady-500 uppercase track-wider w-full text-center"
+                            type="date"
+                            id="fname"
+                            placeholder="Digite a Data de nascimento"
+                            {...register("data_nascimento")}
                           />
                         </div>
 
@@ -106,19 +100,16 @@ export function ModalCadastroFuncionario() {
                             {...register("departamento")}
                           />
                         </div>
-
                         <div className="  px-2 py-3 text-left text-xs font-medium text-grady-500 uppercase track-wider">
                           <input
                             className="px-6 py-3 text-grady-500  track-wider   text-xs font-medium text-grady-500 uppercase track-wider w-full text-center"
-                            type="date"
+                            type="text"
                             id="fname"
-                            placeholder="Digite a Data de nascimento"
-                            {...register("data_nascimento")}
+                            placeholder="Digite o Salario"
+                            {...register("salario")}
                           />
-                          {emailErr && (
-                            <p>Forrmato Data Nascimento invalido: (DD/MM/AA)</p>
-                          )}
                         </div>
+
 
                         <div className="container flex items-center justify-center">
                           <button
