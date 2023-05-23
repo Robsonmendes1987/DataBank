@@ -12,7 +12,8 @@
     "start": "nodemon .",
     "predev": "npm run build",
     "dev": "nodemon --watch \"./src/**\" ./src/server.ts",
-    "lint": "eslint ./src --ext .ts"
+    "lint": "eslint ./src --ext .ts",
+    "vercel-build": "npx sequelize-cli db:migrate"
   },
   "keywords": [],
   "author": "",

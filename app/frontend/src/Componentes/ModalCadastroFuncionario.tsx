@@ -15,6 +15,7 @@ import { validateCpf, validateDtaNascimento } from "../utils/regex";
 interface FormValues extends IFuncioanario {}
 
 export function ModalCadastroFuncionario() {
+  const [loading, setLoading] = useState(false)
   const [showModal, setShowModal] = React.useState(false);
   const { register, handleSubmit, reset } = useForm();
   const { funcionario, setFuncionario, allFuncionarios } =
@@ -34,12 +35,10 @@ export function ModalCadastroFuncionario() {
       setCpfErr(false);
       setShowModal(false);
       await api.post("funcionarios", data);
+      setLoading(false)
     }
-
-
-    setFuncionario(funcionario.filter((del) => del._id !== data._id));
-    reset();
   };
+
 
   useEffect(() => {
     handleSubmit
@@ -78,9 +77,6 @@ export function ModalCadastroFuncionario() {
                             placeholder="Digite o Cpf"
                             {...register("cpf")}
                           />
-                          {/* {cpfErr && (
-                            <p>Formato Cpf invalido: (000.000.000.00)</p>
-                          )} */}
                         </div>
                         <div className="  px-2 py-3 text-left text-xs font-medium text-grady-500 uppercase track-wider">
                           <input
