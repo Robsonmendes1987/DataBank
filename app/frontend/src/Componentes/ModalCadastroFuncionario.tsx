@@ -15,7 +15,7 @@ import { validateCpf } from "../utils/regex";
 export function ModalCadastroFuncionario() {
   const [showModal, setShowModal] = React.useState(false);
   const { register, handleSubmit, reset } = useForm();
-  const {funcionario, allFuncionarios, setFuncionario } =
+  const {funcionario } =
     useContext(AppContext);
   const [cpfErr, setCpfErr] = useState<boolean>(false);
 
